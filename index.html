@@ -172,9 +172,19 @@
             document.getElementById(id).style.display = "block";
         }
 
-        function closeModal(id) {
-            document.getElementById(id).style.display = "none";
+            function closeModal(id) {
+        const modal = document.getElementById(id);
+        const iframe = modal.querySelector("iframe");
+    
+        if (iframe) {
+            iframe.contentWindow.postMessage(
+                '{"event":"command","func":"pauseVideo","args":""}',
+                "*"
+            );
         }
+    
+        modal.style.display = "none";
+    }
     </script>
 </body>
 </html>
