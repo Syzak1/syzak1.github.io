@@ -159,9 +159,6 @@
         <h2>Current Project Preview</h2>
         <p>A 3D action rogue-like.</p>
         <div class="video-container">
-            <iframe width="100%" height="400" src="https://www.youtube.com/embed/wknPcCAq2RU?enablejsapi=1" title="Deus Otiosus" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="video-container">
             <iframe width="100%" height="400" src="https://youtu.be/6_RPSUllwUc?si=1W_lqGdES6V47R55?enablejsapi=1" title="Deus Otiosus" frameborder="0" allowfullscreen></iframe>
         </div>
         <audio controls>
@@ -171,23 +168,30 @@
 </div>
 
     <script>
-        function openModal(id) {
-            document.getElementById(id).style.display = "block";
+    function openModal(id) {
+        document.getElementById(id).style.display = "block";
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        const iframe = modal.querySelector("iframe");
+        const audio = modal.querySelector("audio");
+
+        // Pause YouTube video
+        if (iframe) {
+            iframe.contentWindow.postMessage(
+                '{"event":"command","func":"pauseVideo","args":""}',
+                "*"
+            );
         }
 
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            const iframe = modal.querySelector("iframe");
-    
-            if (iframe) {
-                iframe.contentWindow.postMessage(
-                    '{"event":"command","func":"pauseVideo","args":""}',
-                    "*"
-                );
-            }
-        
-            modal.style.display = "none";
+        // Pause audio
+        if (audio) {
+            audio.pause();
         }
-    </script>
+
+        modal.style.display = "none";
+    }
+</script>
 </body>
 </html>
